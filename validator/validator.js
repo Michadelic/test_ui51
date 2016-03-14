@@ -494,7 +494,7 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
                     });
                 },
                 "w1opt" : function () {
-                    opaTest("Go to tab with key 'db'", function (Given, When, Then, assert) {
+                    opaTest("Checking for some secret app feature", function (Given, When, Then, assert) {
                 		// Actions (click on db tab)
                         When.waitFor({
                             controlType: 'sap.m.IconTabBar',
@@ -512,10 +512,10 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
 								}
 							},
 							success: function () {
-								assert.ok("Opened tab");
+								assert.ok("Success");
 							},
 							error: function () {
-								assert.notOk("Could not open tab");
+								assert.notOk("Error");
 							}
                         });
                 	});
