@@ -146,12 +146,12 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
                             "text": "Week 1 Unit 6"
                         },
                         {
-                            "key": "w1opt",
-                            "text": "Week 1 Exercise"
-                        },
-                        {
                             "key": "w2u1",
                             "text": "Week 2 Unit 1"
+                        },
+                        {
+                            "key": "w1opt",
+                            "text": "Week 2 Bonus"
                         }
                     ]};
                 oModel.setData(mData);
@@ -255,6 +255,7 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
 
         // add a new test to the result list
         showCode: function () {
+            
             var oDisplayListItem = new sap.m.CustomListItem({
                 content: [
                     new sap.m.Text({
@@ -380,7 +381,7 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
                     if (!bSomeTestFailed && this._iTotalCount > 0) {
                         fnShowResult("All good!", true);
                         if(sKey.search("opt") > 0 ) {
-                            fnShowCode();
+                            //fnShowCode();
                         }
                     }
                     window["sap-ui-debug"] = bDebugMode;
@@ -493,53 +494,31 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
                     });
                 },
                 "w1opt" : function () {
-                    opaTest("Find a carousel", function (Given, When, Then, assert) {
-                        // Arrangements
-                        // Actions
+                    opaTest("Go to tab with key 'db'", function (Given, When, Then, assert) {
+                		// Actions (click on db tab)
                         When.waitFor({
-                            controlType: 'sap.m.Carousel',
-                            success: function () {
-                                assert.ok("works");
-
-                            },
-                            error: function () {
-                                assert.notOk("Could not find a carousel");
-                            }
+                            controlType: 'sap.m.IconTabBar',
+                            success : function (aIconTabBars) {
+                            	var oIconTabBar = aIconTabBars[0];
+                            	if ((oIconTabBar.getSelectedKey() === "db" && oIconTabBar.getExpanded() !== true) || oIconTabBar.getSelectedKey() !== "db") {
+									this.waitFor({
+										controlType: 'sap.m.IconTabFilter',
+										matchers : [
+											new PropertyStrictEquals({name : "key", value : "db"}),
+											new Ancestor(oIconTabBar[0])
+										],
+										actions: new Press()
+									});
+								}
+							},
+							success: function () {
+								assert.ok("Opened tab");
+							},
+							error: function () {
+								assert.notOk("Could not open tab");
+							}
                         });
-                        // Assertions
-                    });
-
-                    opaTest("This test will fail, looking for a control named nonsense", function (Given, When, Then, assert) {
-                        // Arrangements
-                        // Actions
-                        When.waitFor({
-                            controlType: 'sap.m.Page',
-                            success: function () {
-                                assert.ok("This will never happen");
-
-                            },
-                            error: function () {
-                                assert.notOk("Oh no!");
-                            }
-                        });
-                        // Assertions
-                    });
-
-                    opaTest("Find a page control", function (Given, When, Then, assert) {
-                        // Arrangements
-                        // Actions
-                        When.waitFor({
-                            controlType: 'sap.m.Page',
-                            success: function () {
-                                assert.ok("funktionukkelt2");
-
-                            },
-                            error: function () {
-                                assert.notOk("nööööö2");
-                            }
-                        });
-                        // Assertions
-                    });
+                	});
                 },
                 "w2u1" : function () {
                 	opaTest("Go to tab with key 'db'", function (Given, When, Then, assert) {
