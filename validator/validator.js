@@ -381,7 +381,7 @@ function (Opa, Opa5, Press, AggregationFilled, PropertyStrictEquals, Properties,
                     if (!bSomeTestFailed && this._iTotalCount > 0) {
                         fnShowResult("All good!", true);
                         if(sKey.search("opt") > 0 ) {
-                            //fnShowCode();
+                            fnShowCode();
                         }
                     }
                     window["sap-ui-debug"] = bDebugMode;
