@@ -1,4 +1,4 @@
-/*global opensap, sinon */
+/*global opensap,sinon*/
 
 sap.ui.require([
 	"sap/ui/test/Opa",
@@ -18,7 +18,9 @@ sap.ui.require([
 
 	sap.ui.base.Object.extend("opensap.Validator", {
 		init: function () {
+			this.bPressBlocker = false;
 			opensap.reuse = {};
+
 			this.injectTestButton();
 			this.bindTestKey();
 		},
@@ -27,9 +29,6 @@ sap.ui.require([
 
 		// injects a simple testing button in the lower left area of the current app
 		injectTestButton: function () {
-			this.bPressBlocker = false;
-			this.bTestsFailed = false;
-
 			this._oValidateButton = new sap.m.Button("validate", {
 				icon: "sap-icon://wrench",
 				tooltip: "Click here or press F9 to execute the tests for this exercise",
@@ -48,7 +47,7 @@ sap.ui.require([
 				}.bind(this)
 			}).placeAt("content", -1);
 
-			// css manupulation for the validator button
+			// CSS manupulation for the validator button
 			this._oValidateButton.addEventDelegate({
 				onAfterRendering: function (oEvent) {
 					var oButton = oEvent.srcControl;
@@ -72,8 +71,6 @@ sap.ui.require([
 					oButton.$("img").css("line-height", "100px");
 					oButton.$("img").css("font-size", "35pt");
 					oButton.$("img").control(0).setColor("#eee");
-
-					//oButton.$().effect( "pulsate", {times:5}, 3000 );
 				}
 			});
 		},
@@ -782,7 +779,7 @@ sap.ui.require([
 			/********* reuse logic for last two week test cases starts here *********/
 
 			opensap.reuse.onAnyPage = {};
-			opensap.reuse.onAnyPage.goToWorklist = function (sSkipWhenOnView) {
+			opensap.reuse.onAnyPage.goToWorklist = function () {
 				opaTest("Go to the 'worklist' page", function (Given, When, Then, assert) {
 					When.waitFor({
 						controlType: "sap.m.Page",
@@ -984,17 +981,11 @@ sap.ui.require([
 
 				"w1u1": function () {
 					opaTest("SAPUI5 is loaded", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						assert.ok("ok");
 					});
 				},
 				"w1u2": function () {
 					opaTest("Find a Carousel control", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.Carousel",
 							success: function () {
@@ -1007,9 +998,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find two Images inside the carousel", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.Carousel",
 							success: function (aCarousels) {
@@ -1038,8 +1026,6 @@ sap.ui.require([
 				},
 				"w1u3": function () {
 					opaTest("Find a Button control", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
 						When.waitFor({
 							controlType: "sap.m.Button",
 							success: function (aButtons) {
@@ -1069,7 +1055,6 @@ sap.ui.require([
 							}
 						});
 
-						// Assertions
 						Then.waitFor({
 							check: function () {
 								return !!$(".sapMMessageToast").length;
@@ -1085,9 +1070,6 @@ sap.ui.require([
 				},
 				"w1u4": function () {
 					opaTest("Find a Component", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Given.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1106,9 +1088,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find an App Descriptor", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1134,9 +1113,6 @@ sap.ui.require([
 				},
 				"w1u5": function () {
 					opaTest("Read from the 'helloPanel' model", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1160,9 +1136,6 @@ sap.ui.require([
 					});
 
 					opaTest("Read from the 'i18n' model", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1185,9 +1158,6 @@ sap.ui.require([
 				},
 				"w1u6": function () {
 					opaTest("Find a Page in an App", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.App",
 							success: function (aApps) {
@@ -1215,9 +1185,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find an IconTabBar", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.IconTabBar",
 							success: function (aIconTabBars) {
@@ -1285,9 +1252,6 @@ sap.ui.require([
 					});
 
 					opaTest("Read from the 'address' model", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1309,9 +1273,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find a Toolbar", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1484,9 +1445,6 @@ sap.ui.require([
 					opensap.reuse.onMyApp.checkDataBindingTable();
 
 					opaTest("Check the currency format", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						When.waitFor({
 							controlType: "sap.m.ObjectListItem",
 							success: function (aObjectListItems) {
@@ -1530,9 +1488,6 @@ sap.ui.require([
 					});
 
 					opaTest("Check if validation is turned on in the App Descriptor", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.ui.core.mvc.View",
 							success: function (aViews) {
@@ -1559,9 +1514,6 @@ sap.ui.require([
 					opensap.reuse.onMyApp.goToStartTab();
 
 					opaTest("Check the input value type", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						When.waitFor({
 							controlType: "sap.m.Input",
 							success: function (aInputs) {
@@ -1596,13 +1548,13 @@ sap.ui.require([
 									actions: new EnterText({
 										text: "4"
 									}),
-									success: function (aInputs) {
+									success: function () {
 										this.waitFor({
 											controlType: "sap.m.Input",
 											matchers: function (oInput) {
 												return (oInput.getValue() === "4.00" || oInput.getValue() === "4,00");
 											},
-											success: function (aInputs) {
+											success: function () {
 												assert.ok("The input value is formatted to a float value after entering '4' as a value");
 											},
 											error: function () {
@@ -1620,13 +1572,13 @@ sap.ui.require([
 									actions: new EnterText({
 										text: "abc"
 									}),
-									success: function (aInputs) {
+									success: function () {
 										this.waitFor({
 											controlType: "sap.m.Input",
 											matchers: function (oInput) {
 												return (oInput.getValueState() === "Error");
 											},
-											success: function (aInputs) {
+											success: function () {
 												assert.ok("The input is in state 'Error' after entering a string value");
 											},
 											error: function () {
@@ -1674,9 +1626,7 @@ sap.ui.require([
 												this.waitFor({
 													controlType: "sap.m.SearchField",
 													matchers: new Ancestor(oToolbar),
-													success: function (aSearchFields) {
-														var oSearchField = aSearchFields[0];
-
+													success: function () {
 														assert.ok("Found a sap.m.SearchField inside the toolbar");
 													},
 													error: function () {
@@ -1708,9 +1658,7 @@ sap.ui.require([
 									}),
 									new Press()
 								],
-								success: function (aSearchFields) {
-									var oSearchField = aSearchFields[0];
-
+								success: function () {
 									this.waitFor({
 										controlType: "sap.m.IconTabFilter",
 										matchers: new PropertyStrictEquals({name: "key", value: "db"}),
@@ -1794,7 +1742,7 @@ sap.ui.require([
 									}),
 									new Press()
 								],
-								success: function (aSearchFields) {
+								success: function () {
 									assert.ok("The search is reset");
 								},
 								error: function () {
@@ -2144,7 +2092,7 @@ sap.ui.require([
 								// version is not so important and might change, make it a soft check
 								if (oComponent.getManifestEntry("sap.app").sourceTemplate.version) {
 									assert.ok("Found a template version number");
-									fVersion = Number.parseFloat(oComponent.getManifestEntry("sap.app").sourceTemplate.version)
+									fVersion = Number.parseFloat(oComponent.getManifestEntry("sap.app").sourceTemplate.version);
 									if (fVersion >= 1.36) {
 										assert.ok("Template is of UI5 version 1.36 or higher");
 									} else {
@@ -2180,16 +2128,14 @@ sap.ui.require([
 
 					opaTest("Check the worklist table", function (Given, When, Then, assert) {
 						Then.waitFor({
-							controlType: "sap.m.Table",
+							//controlType: "sap.m.Table",
 							id: 'table',
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
 							matchers: [
-								new AggregationFilled({name: "items"}),
+								new AggregationFilled({name: "items"})
 							],
-							success: function (aTables) {
-								var oTable = aTables[0];
-
+							success: function () {
 								assert.ok("Found a sap.m.Table with the id 'table'");
 							},
 							error: function () {
@@ -2213,22 +2159,24 @@ sap.ui.require([
 					opaTest("Check the table columns", function (Given, When, Then, assert) {
 						// click on header here
 						Then.waitFor({
-							controlType: "sap.m.Table",
+							//controlType: "sap.m.Table",
+							id: 'table',
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
 							success: function (aTables) {
-								var oTable = aTables[0],
+								var i,
+									oTable = aTables[0],
 									aColumns = oTable.getColumns(),
 									oSupplierColumn,
 									oWebColumn;
 
-								for (var i = 0; i < aColumns.length; i++) {
+								for (i = 0; i < aColumns.length; i++) {
 									if (aColumns[i].getId().search("supplier") >= 0) {
 										iSupplierColumnIndex = i;
 										oSupplierColumn = aColumns[iSupplierColumnIndex];
 									}
 								}
-								for (var i = 0; i < aColumns.length; i++) {
+								for (i = 0; i < aColumns.length; i++) {
 									if (aColumns[i].getId().search("web") >= 0) {
 										iWebColumnIndex = i;
 										oWebColumn = aColumns[iWebColumnIndex];
@@ -2339,9 +2287,6 @@ sap.ui.require([
 					opensap.reuse.onTheWorklistPage.goToTab("all");
 
 					opaTest("Remember the number of items in the table", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						When.waitFor({
 							controlType: "sap.m.IconTabBar",
 							success: function (aIconTabBars) {
@@ -2377,9 +2322,6 @@ sap.ui.require([
 					opensap.reuse.onTheWorklistPage.checkTableHasLessItemsThan("cheap", iOriginalLength);
 
 					opaTest("Verify the 'cheap' filter logic", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.IconTabBar",
 							success: function (aIconTabBars) {
@@ -2423,9 +2365,6 @@ sap.ui.require([
 					opensap.reuse.onTheWorklistPage.checkTableHasLessItemsThan("moderate", iOriginalLength);
 
 					opaTest("Verify the 'moderate' filter logic", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.IconTabBar",
 							success: function (aIconTabBars) {
@@ -2470,9 +2409,6 @@ sap.ui.require([
 					opensap.reuse.onTheWorklistPage.checkTableHasLessItemsThan("expensive", iOriginalLength);
 
 					opaTest("Verify the 'expensive' filter logic", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.IconTabBar",
 							success: function (aIconTabBars) {
@@ -2804,7 +2740,7 @@ sap.ui.require([
 													text: new RegExp("Weight", "i")
 												})
 											],
-											success: function(aTexts) {
+											success: function() {
 												assert.ok("Found a text in the popover");
 											},
 											error : function() {
@@ -2871,10 +2807,8 @@ sap.ui.require([
 						var sViewNamespace = "opensap.manageproducts.view.",
 							sViewName = "Worklist";
 
-						// Arrangements
-						// Actions
 						When.waitFor({
-							controlType: "sap.m.Button",
+							//controlType: "sap.m.Button",
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
 							id: "addButton",
@@ -2887,7 +2821,6 @@ sap.ui.require([
 							}
 						});
 
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.Page",
 							viewNamespace: sViewNamespace,
@@ -2924,10 +2857,8 @@ sap.ui.require([
 						var sViewNamespace = "opensap.manageproducts.view.",
 							sViewName = "Worklist";
 
-						// Arrangements
-						// Actions
 						When.waitFor({
-							controlType: "sap.m.Button",
+							//controlType: "sap.m.Button",
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
 							id: "addButton",
@@ -2940,7 +2871,6 @@ sap.ui.require([
 							}
 						});
 
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.Page",
 							viewNamespace: sViewNamespace,
@@ -2967,7 +2897,8 @@ sap.ui.require([
 							sViewName = "Add";
 
 						Then.waitFor({
-							controlType: "sap.ui.comp.smartform.SmartForm",
+							//controlType: "sap.ui.comp.smartform.SmartForm",
+							id: 'form',
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
 							success: function (aSmartForms) {
@@ -2982,7 +2913,7 @@ sap.ui.require([
 
 										this.waitFor({
 											id: aInputs[0].getId(),
-											controlType: "sap.m.Input",
+											//controlType: "sap.m.Input",
 											matchers: new Ancestor(oSmartForm),
 											actions: new EnterText({
 												text: oProperties.Name
@@ -2997,7 +2928,7 @@ sap.ui.require([
 
 										this.waitFor({
 											id: aInputs[1].getId(),
-											controlType: "sap.m.Input",
+											//controlType: "sap.m.Input",
 											matchers: new Ancestor(oSmartForm),
 											actions: new EnterText({
 												text: oProperties.Category
@@ -3012,7 +2943,7 @@ sap.ui.require([
 
 										this.waitFor({
 											id: aInputs[2].getId(),
-											controlType: "sap.m.Input",
+											//controlType: "sap.m.Input",
 											matchers: new Ancestor(oSmartForm),
 											actions: new EnterText({
 												text: oProperties.SupplierID
@@ -3027,7 +2958,7 @@ sap.ui.require([
 
 										this.waitFor({
 											id: aInputs[3].getId(),
-											controlType: "sap.m.Input",
+											//controlType: "sap.m.Input",
 											matchers: new Ancestor(oSmartForm),
 											actions: new EnterText({
 												text: oProperties.Price
@@ -3066,7 +2997,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find the new product", function (Given, When, Then, assert) {
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.ObjectAttribute",
 							matchers: new PropertyStrictEquals({name : "text", value : oProperties.Name}),
@@ -3087,9 +3017,6 @@ sap.ui.require([
 					opensap.reuse.onAnyPage.goToNthProduct(1);
 
 					opaTest("Find the delivery status", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						When.waitFor({
 							controlType: "sap.m.ObjectStatus",
 							success: function (aStatuses) {
@@ -3149,9 +3076,7 @@ sap.ui.require([
 							controlType: "sap.ui.core.mvc.View",
 							viewNamespace: sViewNamespace,
 							viewName: sViewName,
-							success: function (aViews) {
-								var oView = aViews[0];
-
+							success: function () {
 								// load dependencies
 								jQuery.sap.require("sap.ui.thirdparty.qunit");
 								jQuery.sap.require("sap.ui.qunit.qunit-junit");
@@ -3208,8 +3133,6 @@ sap.ui.require([
 					opaTest("Go to the add page", function (Given, When, Then, assert) {
 
 
-						// Arrangements
-						// Actions
 						When.waitFor({
 							controlType: "sap.m.Button",
 							viewNamespace: sViewNamespace,
@@ -3224,7 +3147,6 @@ sap.ui.require([
 							}
 						});
 
-						// Assertions
 						Then.waitFor({
 							controlType: "sap.m.Page",
 							viewNamespace: sViewNamespace,
@@ -3356,9 +3278,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find a MessageToast with the new rating value", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							check: function () {
 								return !!$(".sapMMessageToast").length;
@@ -3376,7 +3295,6 @@ sap.ui.require([
 								assert.notOk("Could not find a MessageToast");
 							}
 						});
-						// Assertions
 					});
 
 					opaTest("Check the 'ProductRate' API", function (Given, When, Then, assert) {
@@ -3427,8 +3345,6 @@ sap.ui.require([
 					opensap.reuse.onAnyPage.goToWorklist();
 
 					opaTest("Delete the first product in the table", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
 						When.waitFor({
 							controlType: "sap.m.ColumnListItem",
 							success: function (aListItems) {
@@ -3487,24 +3403,15 @@ sap.ui.require([
 					});
 
 					opaTest("Check if the product has been deleted", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
 						Then.waitFor({
 							controlType: "sap.m.ColumnListItem",
 							matchers: function (aItems) {
-								var bFound = false;
-
 								for (var i = 0; i < aItems.length; i++) {
 									if (aItems[i].getBindingContextPath() === sBindingPath) {
-										bFound = true;
+										return true;
 									}
 								}
-
-								if (!bFound) {
-									return true;
-								} else {
-									return false;
-								}
+								return false;
 							},
 							success: function () {
 								assert.ok("The product with the binding path '" + sBindingPath + "' is deleted");
@@ -3516,9 +3423,6 @@ sap.ui.require([
 					});
 
 					opaTest("Find a MessageToast with the product id", function (Given, When, Then, assert) {
-						// Arrangements
-						// Actions
-						// Assertions
 						Then.waitFor({
 							check: function () {
 								return !!$(".sapMMessageToast").length;
@@ -3536,7 +3440,6 @@ sap.ui.require([
 								assert.notOk("Could not find a MessageToast");
 							}
 						});
-						// Assertions
 					});
 				}
 			};
